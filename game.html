@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<head>
+<script>
+    //暂时定义V7为获得页面对象的方式之一。
+    var V7=function(id){
+        if(document.getElementById(id)){
+            return document.getElementById(id)
+        }
+        else if(parent.window){
+            if(parent.window.document.getElementById(id)){
+                return parent.window.document.getElementById(id);
+            }
+        }
+        //*
+        else if (top.window){
+            if(top.window.document.getElementById(id)){
+                return top.window.document.getElementById(id);
+            }
+        }//*/
+
+    };
+
+    ws = new WebSocket("ws://127.0.0.1:2346");
+    ws.onopen = function() {
+        V7("show").innerHTML = "连接成功";
+//            alert("连接成功");
+//            ws.send('tom');
+//            alert("给服务端发送一个字符串：tom");
+    };
+    ws.onmessage = function(e) {
+//            alert("收到服务端的消息：" + e.data);
+        V7("show_time").innerHTML = e.data;
+    };
+
+    function send_sth() {
+        ws.send(V7("send_a").value);
+    }
+</script>
+</head>
+
+<body>
+<div id="show"></div>
+<div id="show_time"></div>
+<br />
+<br />
+-------------------------------
+<div id="a"></div>
+<br />
+<br />
+<input id="send_a" type="text" /> <span onclick="send_sth();">提交</span>
+<br />
+-------------------------------
+<div id="b"></div>
+</body>
+
+</html>

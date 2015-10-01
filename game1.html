@@ -3,64 +3,78 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <head>
-<script>
-    //暂时定义V7为获得页面对象的方式之一。
-    var V7=function(id){
-        if(document.getElementById(id)){
-            return document.getElementById(id)
-        }
-        else if(parent.window){
-            if(parent.window.document.getElementById(id)){
-                return parent.window.document.getElementById(id);
+    <script>
+        //暂时定义V7为获得页面对象的方式之一。
+        var V7=function(id){
+            if(document.getElementById(id)){
+                return document.getElementById(id)
             }
-        }
-        //*
-        else if (top.window){
-            if(top.window.document.getElementById(id)){
-                return top.window.document.getElementById(id);
+            else if(parent.window){
+                if(parent.window.document.getElementById(id)){
+                    return parent.window.document.getElementById(id);
+                }
             }
-        }//*/
+            //*
+            else if (top.window){
+                if(top.window.document.getElementById(id)){
+                    return top.window.document.getElementById(id);
+                }
+            }//*/
 
-    };
+        };
 
-    ws = new WebSocket("ws://127.0.0.1:2346");
-    ws.onopen = function() {
-        V7("show").innerHTML = "连接成功";
+        ws = new WebSocket("ws://127.0.0.1:2346");
+        ws.onopen = function() {
+            V7("show").innerHTML = "连接成功";
 //            alert("连接成功");
-        ws.send('玩家B');
+            ws.send('玩家B');
 //            alert("给服务端发送一个字符串：tom");
-    };
+        };
 
-    ws.onmessage = function(e) {
+        ws.onmessage = function(e) {
 //            alert("收到服务端的消息：" + e.data);
-        var info = eval("(" + e.data + ")" );
-        console.log(info);
-        console.log(info.date);
-        console.log(info.fight);
+            var info = eval("(" + e.data + ")" );
+            console.log(info);
+            console.log(info.date);
+            console.log(info.fight);
 
-        if(info.date){
-            V7("show_time").innerHTML = info.date;
+            if(info.date){
+                V7("show_time").innerHTML = info.date;
+            }
+
+            if (info.fight.A) {
+                V7("show_fight").innerHTML = info.fight;
+                V7("show_a_uid").innerHTML = info.fight.A.uid;
+                V7("show_a_name").innerHTML = info.fight.A.name;
+                V7("show_a_hp").innerHTML = info.fight.A.hp;
+                V7("show_a_dp").innerHTML = info.fight.A.dp;
+                V7("show_a_direction").innerHTML = info.fight.A.direct;
+            }
+
+            if (info.fight.B) {
+                V7("show_fight").innerHTML = info.fight;
+                V7("show_b_uid").innerHTML = info.fight.B.uid;
+                V7("show_b_name").innerHTML = info.fight.B.name;
+                V7("show_b_hp").innerHTML = info.fight.B.hp;
+                V7("show_b_dp").innerHTML = info.fight.B.dp;
+                V7("show_b_direction").innerHTML = info.fight.B.direct;
+            }
+
+        };
+
+        function send_a() {
+            ws.send(V7("send_a").value);
+            console.log('send_a');
         }
 
-        if (info.fight) {
-            V7("show_fight").innerHTML = info.fight;
+        function send_b() {
+            ws.send(V7("send_b").value);
         }
-
-    };
-
-    function send_a() {
-        ws.send(V7("send_a").value);
-        console.log('send_a');
-    }
-
-    function send_b() {
-        ws.send(V7("send_b").value);
-    }
-</script>
+    </script>
 </head>
 
 <body>
-<table width=800>
+<table width=600>
 
     <tr>
         <td width=200 height="60">
@@ -78,13 +92,26 @@
 
     <tr>
         <td height="200">
-           玩家A
+            玩家A
+            <div id="show_a_uid"></div>
+            <br />
+            <div id="show_a_name"></div><br />
+            <div id="show_a_hp"></div><br />
+            <div id="show_a_dp"></div><br />
+            <div id="show_a_direction"></div>
+
         </td>
         <td>
             <div id="show_fight"></div>
         </td>
         <td>
             玩家B
+            <div id="show_b_uid"></div>
+            <br />
+            <div id="show_b_name"></div><br />
+            <div id="show_b_hp"></div><br />
+            <div id="show_b_dp"></div><br />
+            <div id="show_b_direction"></div>
         </td>
     </tr>
 

@@ -93,10 +93,10 @@ $ws_worker->onMessage = function($connections, $data)
     if($fight_info['state'] == 'fighting'){
         $fight_info['fight_sort'] += 1;
         if($fight_info['A']['uid'] == $uid) {
-            $fight_info['A']['direction'] = $data;
+            $fight_info['A']['direct'] = $data;
         }
         else if($fight_info['B']['uid'] == $uid) {
-            $fight_info['B']['direction'] = $data;
+            $fight_info['B']['direct'] = $data;
         }
 
     }
@@ -108,7 +108,7 @@ $ws_worker->onMessage = function($connections, $data)
 
     $info['fight'] = $fight_info;
     $json_info = json_encode($info, true);
-    $connections->send($json_info);
+    // $connections->send($json_info);
 
     // 群发;
     foreach($ws_worker->connections as $connection)

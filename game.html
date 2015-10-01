@@ -42,8 +42,22 @@
             V7("show_time").innerHTML = info.date;
         }
 
-        if (info.fight) {
+        if (info.fight.A) {
             V7("show_fight").innerHTML = info.fight;
+            V7("show_a_uid").innerHTML = info.fight.A.uid;
+            V7("show_a_name").innerHTML = info.fight.A.name;
+            V7("show_a_hp").innerHTML = info.fight.A.hp;
+            V7("show_a_dp").innerHTML = info.fight.A.dp;
+            V7("show_a_direction").innerHTML = info.fight.A.direct;
+        }
+
+        if (info.fight.B) {
+            V7("show_fight").innerHTML = info.fight;
+            V7("show_b_uid").innerHTML = info.fight.B.uid;
+            V7("show_b_name").innerHTML = info.fight.B.name;
+            V7("show_b_hp").innerHTML = info.fight.B.hp;
+            V7("show_b_dp").innerHTML = info.fight.B.dp;
+            V7("show_b_direction").innerHTML = info.fight.B.direct;
         }
 
     };
@@ -60,7 +74,7 @@
 </head>
 
 <body>
-<table width=800>
+<table width=600>
 
     <tr>
         <td width=200 height="60">
@@ -79,12 +93,25 @@
     <tr>
         <td height="200">
            玩家A
+            <div id="show_a_uid"></div>
+<br />
+            <div id="show_a_name"></div><br />
+            <div id="show_a_hp"></div><br />
+            <div id="show_a_dp"></div><br />
+            <div id="show_a_direction"></div>
+
         </td>
         <td>
             <div id="show_fight"></div>
         </td>
         <td>
             玩家B
+            <div id="show_b_uid"></div>
+            <br />
+            <div id="show_b_name"></div><br />
+            <div id="show_b_hp"></div><br />
+            <div id="show_b_dp"></div><br />
+            <div id="show_b_direction"></div>
         </td>
     </tr>
 

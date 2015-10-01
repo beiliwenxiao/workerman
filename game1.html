@@ -36,28 +36,31 @@
             var info = eval("(" + e.data + ")" );
             console.log(info);
             console.log(info.date);
-            console.log(info.fight);
 
             if(info.date){
                 V7("show_time").innerHTML = info.date;
             }
 
-            if (info.fight.A) {
-                V7("show_fight").innerHTML = info.fight;
-                V7("show_a_uid").innerHTML = info.fight.A.uid;
-                V7("show_a_name").innerHTML = info.fight.A.name;
-                V7("show_a_hp").innerHTML = info.fight.A.hp;
-                V7("show_a_dp").innerHTML = info.fight.A.dp;
-                V7("show_a_direction").innerHTML = info.fight.A.direct;
+            if(info.msg){
+                V7("show_message").innerHTML = info.msg;
             }
 
-            if (info.fight.B) {
-                V7("show_fight").innerHTML = info.fight;
-                V7("show_b_uid").innerHTML = info.fight.B.uid;
-                V7("show_b_name").innerHTML = info.fight.B.name;
-                V7("show_b_hp").innerHTML = info.fight.B.hp;
-                V7("show_b_dp").innerHTML = info.fight.B.dp;
-                V7("show_b_direction").innerHTML = info.fight.B.direct;
+            if (typeof(info.A) !== "undefined") {
+
+                V7("show_a_uid").innerHTML = info.A.uid;
+                V7("show_a_name").innerHTML = info.A.name;
+                V7("show_a_hp").innerHTML = info.A.hp;
+                V7("show_a_dp").innerHTML = info.A.dp;
+                V7("show_a_direction").innerHTML = info.A.direct;
+            }
+
+            if (typeof(info.B) !== "undefined") {
+
+                V7("show_b_uid").innerHTML = info.B.uid;
+                V7("show_b_name").innerHTML = info.B.name;
+                V7("show_b_hp").innerHTML = info.B.hp;
+                V7("show_b_dp").innerHTML = info.B.dp;
+                V7("show_b_direction").innerHTML = info.B.direct;
             }
 
         };
@@ -85,7 +88,7 @@
 
         </td>
         <td width=200>
-
+            <div id="show_message"></div>
         </td>
     </tr>
 

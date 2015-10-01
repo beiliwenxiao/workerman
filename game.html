@@ -30,27 +30,91 @@
 //            ws.send('tom');
 //            alert("给服务端发送一个字符串：tom");
     };
+
     ws.onmessage = function(e) {
 //            alert("收到服务端的消息：" + e.data);
-        V7("show_time").innerHTML = e.data;
+        var info = eval("(" + e.data + ")" );
+        console.log(info);
+        console.log(info.date);
+        console.log(info.fight);
+
+        if(info.date){
+            V7("show_time").innerHTML = info.date;
+        }
+
+        if (info.fight) {
+            V7("show_fight").innerHTML = info.fight;
+        }
+
     };
 
-    function send_sth() {
+    function send_a() {
         ws.send(V7("send_a").value);
+        console.log('send_a');
+    }
+
+    function send_b() {
+        ws.send(V7("send_b").value);
     }
 </script>
 </head>
 
 <body>
-<div id="show"></div>
-<div id="show_time"></div>
+<table width=800>
+
+    <tr>
+        <td width=200 height="60">
+            当前时间:<div id="show_time"></div>
+        </td>
+        <td width=400>
+            连接状态:<div id="show"></div>
+
+        </td>
+        <td width=200>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td height="200">
+           玩家A
+        </td>
+        <td>
+            <div id="show_fight"></div>
+        </td>
+        <td>
+            玩家B
+        </td>
+    </tr>
+
+
+
+    <tr>
+        <td>
+
+        </td>
+        <td>
+            <input type ="hidden" id="send_a" value="up" />
+            <input type="submit" onclick="send_a();" value="上">
+            <input type ="hidden" id="send_b" value="down" />
+            <input type="submit" onclick="send_b();" value="下">
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+</table>
+
+
 <br />
 <br />
 -------------------------------
 <div id="a"></div>
 <br />
 <br />
-<input id="send_a" type="text" /> <span onclick="send_sth();">提交</span>
+
 <br />
 -------------------------------
 <div id="b"></div>

@@ -23,7 +23,8 @@
 
     };
 
-    ws = new WebSocket("ws://127.0.0.1:2346");
+//    ws = new WebSocket("ws://127.0.0.1:2346");
+    ws = new WebSocket("ws://192.168.1.3:2346");
     ws.onopen = function() {
         V7("show").innerHTML = "连接成功";
 //            alert("连接成功");
@@ -45,23 +46,40 @@
             V7("show_message").innerHTML = info.msg;
         }
 
-        if (typeof(info.A) !== "undefined") {
+        if (typeof(info.A) != "undefined") {
 
             V7("show_a_uid").innerHTML = info.A.uid;
             V7("show_a_name").innerHTML = info.A.name;
             V7("show_a_hp").innerHTML = info.A.hp;
+            V7("show_a_ap").innerHTML = info.A.ap;
             V7("show_a_dp").innerHTML = info.A.dp;
+            V7("show_a_sp").innerHTML = info.A.sp;
+            V7("show_a_action").innerHTML = info.A.act;
+
+
+        }
+
+        if (typeof( info.A.direct) != "undefined") {
             V7("show_a_direction").innerHTML = info.A.direct;
         }
 
-        if (typeof(info.B) !== "undefined") {
 
+        if (typeof(info.B) != "undefined") {
             V7("show_b_uid").innerHTML = info.B.uid;
             V7("show_b_name").innerHTML = info.B.name;
             V7("show_b_hp").innerHTML = info.B.hp;
+            V7("show_b_ap").innerHTML = info.B.ap;
             V7("show_b_dp").innerHTML = info.B.dp;
+            V7("show_b_sp").innerHTML = info.B.sp;
+            V7("show_b_action").innerHTML = info.B.act;
+        }
+
+        if (typeof(info.B.direct) != "undefined") {
             V7("show_b_direction").innerHTML = info.B.direct;
         }
+
+        V7("fight_state").innerHTML = info.state;
+        V7("fight_sort").innerHTML = info.fight_sort;
 
     };
 
@@ -73,6 +91,10 @@
     function send_b() {
         ws.send(V7("send_b").value);
     }
+
+    function send_c() {
+        ws.send(V7("send_c").value);
+    }
 </script>
 </head>
 
@@ -83,38 +105,42 @@
         <td width=200 height="60">
             当前时间:<div id="show_time"></div>
         </td>
-        <td width=400>
-            连接状态:<div id="show"></div>
+        <td width=200>
 
+            战斗信息:<div id="show_message"></div><br />
+            战斗状态:<div id="fight_state"></div><br />
+            战斗回合:<div id="fight_sort"></div><br />
         </td>
         <td width=200>
-            <div id="show_message"></div>
+            连接状态:<div id="show"></div>
         </td>
     </tr>
 
 
     <tr>
         <td height="200">
-           玩家A
-            <div id="show_a_uid"></div>
-<br />
-            <div id="show_a_name"></div><br />
-            <div id="show_a_hp"></div><br />
-            <div id="show_a_dp"></div><br />
-            <div id="show_a_direction"></div>
+            I D:<span id="show_a_uid"></span><br/>
+            姓名:<span id="show_a_name"></span><br/>
+            生命:<span id="show_a_hp"></span><br/>
+            攻击:<span id="show_a_ap"></span><br/>
+            防御:<span id="show_a_dp"></span><br/>
+            速度:<span id="show_a_sp"></span><br/>
+            行动:<span id="show_a_action"></span><br/>
+            方向:<span id="show_a_direction"></span>
 
         </td>
         <td>
             <div id="show_fight"></div>
         </td>
         <td>
-            玩家B
-            <div id="show_b_uid"></div>
-            <br />
-            <div id="show_b_name"></div><br />
-            <div id="show_b_hp"></div><br />
-            <div id="show_b_dp"></div><br />
-            <div id="show_b_direction"></div>
+            I D:<span id="show_b_uid"></span><br/>
+            姓名:<span id="show_b_name"></span><br/>
+            生命:<span id="show_b_hp"></span><br/>
+            攻击:<span id="show_b_ap"></span><br/>
+            防御:<span id="show_b_dp"></span><br/>
+            速度:<span id="show_b_sp"></span><br/>
+            行动:<span id="show_b_action"></span><br/>
+            方向:<span id="show_b_direction"></span>
         </td>
     </tr>
 
@@ -127,8 +153,10 @@
         <td>
             <input type ="hidden" id="send_a" value="up" />
             <input type="submit" onclick="send_a();" value="上">
-            <input type ="hidden" id="send_b" value="down" />
-            <input type="submit" onclick="send_b();" value="下">
+            <input type ="hidden" id="send_b" value="middle" />
+            <input type="submit" onclick="send_b();" value="中">
+            <input type ="hidden" id="send_c" value="down" />
+            <input type="submit" onclick="send_c();" value="下">
         </td>
         <td>
 
@@ -140,14 +168,7 @@
 
 <br />
 <br />
--------------------------------
-<div id="a"></div>
-<br />
-<br />
 
-<br />
--------------------------------
-<div id="b"></div>
 </body>
 
 </html>

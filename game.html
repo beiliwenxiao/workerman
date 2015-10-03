@@ -51,6 +51,7 @@
         }
         if(info.img){
             V7("show_fight").innerHTML = '\<img src\=' + info.img + '\>';
+            setTimeout(function(){ V7("show_fight").innerHTML = '\<img src\="images/sword_man_stand.jpg"\>';},1000);
         }
 
         if (typeof(info.A) != "undefined") {

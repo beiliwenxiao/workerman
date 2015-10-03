@@ -96,8 +96,8 @@ $worker->onMessage = function($connection, $data)
 
         do_fight();
 
-        // 启动战斗定时器.10秒1回合.
-        $timer_id = Timer::add(10, function()
+        // 启动战斗定时器.3秒1回合.
+        $timer_id = Timer::add(3, function()
         {
             do_fight();
         });
@@ -126,7 +126,7 @@ $worker->onMessage = function($connection, $data)
 
     }
 
-
+    $fight_info['img'] = "";
     $json_info = json_encode($fight_info, true);
     // $connections->send($json_info);
 
@@ -228,7 +228,7 @@ function do_fight(){
             } else {
                 $winner = $fight_info['B']['name'];
             }
-            $fight_info['msg'] .= '<br />战斗于第'.$fight_info['fight_sort'].'回合结束.<br />'.$winner."获得胜利!";
+            $fight_info['msg'] .= '<br /><font color=red>战斗于第'.$fight_info['fight_sort'].'回合结束.<br />'.$winner."获得胜利!</font>";
 
             Timer::del($timer_id);
 
@@ -298,7 +298,7 @@ function user_init($data, $fight_info, $uid)
             $fight_info['A']['uid'] = $uid;
             $fight_info['A']['name'] = "啦啦啦";
             $fight_info['A']['hp'] = rand(50, 99);
-            $fight_info['A']['ap'] = rand(10, 20);
+            $fight_info['A']['ap'] = rand(20, 50);
             $fight_info['A']['dp'] = rand(5, 10);
             $fight_info['A']['sp'] = rand(50, 99); // 速度
             $fight_info['count'] += 1;
@@ -310,7 +310,7 @@ function user_init($data, $fight_info, $uid)
             $fight_info['B']['uid'] = $uid;
             $fight_info['B']['name'] = "嘟嘟嘟";
             $fight_info['B']['hp'] = rand(50, 99);
-            $fight_info['B']['ap'] = rand(10, 20);
+            $fight_info['B']['ap'] = rand(20, 50);
             $fight_info['B']['dp'] = rand(5, 10);
             $fight_info['B']['sp'] = rand(50, 99); // 速度
             $fight_info['count'] += 1;

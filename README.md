@@ -8,16 +8,29 @@ manual:[http://doc3.workerman.net](http://doc3.workerman.net)
 Workerman is a library for event-driven programming in PHP. It has a huge number of features. Each worker is able to handle thousands of connections.
 
 ## Usage
-继续要先启动ws_test.php
+先启动ws_test.php
+
 php ws_test.php start
 再打开game.html用于玩家A
 最后打开game1.html用于玩家B
 打开顺序不能乱.因为没有做登陆验证什么的.
+
 只是一个小demo.
 
 作为客户端玩的时候,
+
 1)需要拷贝game.hmtl 和 /images 下所有文件到桌面 或者某一个相对目录就行.
+
 2)需要修改game.html里的ip指向服务器的ip
+
+还需要处理的问题:
+
+1)如何绑定不同的用户.
+2)如何处理掉线.
+3)onConnect的时候,如何群发消息.
+4)如何发送消息给不同的用户.比如战斗结束时的胜负信息.
+
+
 
 ## Demos
 [tadpole](http://kedou.workerman.net/)  

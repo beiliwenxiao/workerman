@@ -4,6 +4,10 @@
 
 <head>
 <script>
+    /*
+    * todo 回合显示的时候,还缺倒计时.
+    *
+    * */
     //暂时定义V7为获得页面对象的方式之一。
     var V7=function(id){
         if(document.getElementById(id)){
@@ -44,6 +48,9 @@
 
         if(info.msg){
             V7("show_message").innerHTML = info.msg;
+        }
+        if(info.img){
+            V7("show_fight").innerHTML = '\<img src\=' + info.img + '\>';
         }
 
         if (typeof(info.A) != "undefined") {
@@ -130,7 +137,9 @@
 
         </td>
         <td>
-            <div id="show_fight"></div>
+            <span id="show_fight" style="height:200px; width:400px;">
+                <img src="images/sword_man_stand_a.jpg">
+            </span>
         </td>
         <td>
             I D:<span id="show_b_uid"></span><br/>

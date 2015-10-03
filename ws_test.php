@@ -86,6 +86,14 @@ $worker->onMessage = function($connection, $data)
         $fight_info['B']['direct'] = 'middle';
         echo "战斗开始.";
 
+        // 改变图片.群发一次.
+        $fight_info['img'] = 'images/sword_man_stand.jpg';
+        $json_info = json_encode($fight_info, true);
+        foreach($connection->worker->connections as $con)
+        {
+            $con->send($json_info);
+        }
+
         do_fight();
 
         // 启动战斗定时器.10秒1回合.
@@ -117,6 +125,7 @@ $worker->onMessage = function($connection, $data)
         }
 
     }
+
 
     $json_info = json_encode($fight_info, true);
     // $connections->send($json_info);
@@ -158,7 +167,7 @@ function do_fight(){
 
         // 战斗.根据上一回合显示的攻防状态,判断.
         $fight_msg = '';
-
+        $fight_img = '';
         if (isset($fight_list[$num-1])) {
             echo "进入战斗循环";
             var_dump($fight_list[$num-1]);
@@ -170,12 +179,14 @@ function do_fight(){
                     $fight_list[$num]['hurt'] = $hurt;
                     $fight_info['B']['hp'] -= $hurt;
                     $fight_msg = $fight_info['A']['name'].'砍了'.$fight_info['B']['name'].'一刀';
-
                 } else {
                     $hurt = 0;
                     $fight_list[$num]['hurt'] = $hurt;
                     $fight_msg = $fight_info['B']['name'].'挡住了'.$fight_info['A']['name'].'的攻击';
                 }
+
+                $fight_img = "images/sword_man_a_attack_".$fight_info['A']['direct']."_b_defend_".$fight_info['B']['direct'].".jpg";
+
             } else {
                 // 如果防守方没有防御住.
                 if ($fight_info['A']['direct'] !== $fight_info['B']['direct']) {
@@ -189,13 +200,15 @@ function do_fight(){
                     $fight_list[$num]['hurt'] = $hurt;
                     $fight_msg = $fight_info['A']['name'].'挡住了'.$fight_info['B']['name'].'的攻击';
                 }
+                $fight_img = "images/sword_man_b_attack_".$fight_info['B']['direct']."_a_defend_".$fight_info['A']['direct'].".jpg";
             }
         }
 
         // 群发数据
         $fight_info['msg'] = '第'.($num-1).'回合<br />'.$fight_msg.'<br />  第'.$fight_info['fight_sort'].'回合.<br />';
-
+        $fight_info['img'] = $fight_img;
         $fight_list[$num]['msg'] = $fight_info['msg'];
+        $fight_list[$num]['img'] = $fight_info['img'];
         $json_info = json_encode($fight_info, true);
         foreach($worker->connections as $con)
         {

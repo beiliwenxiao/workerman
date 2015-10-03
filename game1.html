@@ -23,6 +23,7 @@
 
         };
 
+        //    ws = new WebSocket("ws://127.0.0.1:2346");
         ws = new WebSocket("ws://192.168.1.3:2346");
         ws.onopen = function() {
             V7("show").innerHTML = "连接成功";
@@ -43,6 +44,9 @@
 
             if(info.msg){
                 V7("show_message").innerHTML = info.msg;
+            }
+            if(info.img){
+                V7("show_fight").innerHTML = '\<img src\=' + info.img + '\>';
             }
 
             if (typeof(info.A) != "undefined") {
@@ -129,7 +133,9 @@
 
         </td>
         <td>
-            <div id="show_fight"></div>
+            <span id="show_fight" style="height:200px; width:400px;">
+                <img src="images/sword_man_stand_a.jpg">
+            </span>
         </td>
         <td>
             I D:<span id="show_b_uid"></span><br/>
